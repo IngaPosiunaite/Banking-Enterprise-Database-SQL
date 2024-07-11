@@ -1,13 +1,90 @@
-<h3> Bank Database
+# Banking Enterprise Database
 
-<h5> The main objective of this assignment was to design and implement a database that contains information about a banking enterprise, providing a general overview of the enterprise, its basic operations, and related data.
+## Project Overview
+This project involves designing and implementing a database for a banking enterprise. The database stores information about branches, employees, customers, and accounts. The main tasks include creating an Entity-Relationship Diagram (ERD), converting the ERD into a normalized relational schema, implementing SQL scripts for table creation and data insertion, and writing SQL queries for data extraction and manipulation.
 
-<h5> Initial Requirements
+## Files in the Project
 
-<h5> The following major characteristics of the banking enterprise were considered:
+### 1. `create_and_insert.sql`
+This SQL script contains the statements to create the necessary tables for the banking enterprise database and to insert initial data into those tables.
 
-<h5>The bank is organized into branches, each situated in a specific city and identified by a unique name. The bank records each customer's name, as well as the customer's street and city of residence. Each customer is associated with a specific banker, who may serve as a personal banker for that customer. The bank maintains essential information about each employee, including the employee's manager.
-<h5>The bank offers two types of accounts: savings and current accounts. Both account types can be held by multiple customers, and a customer can have more than one account. All accounts within the bank have balances expressed in the same currency.
-<h5>Note: In a real banking enterprise, the bank would also track deposits and withdrawals. However, in this scenario, we do not include these functionalities.
+#### Table Creation
+- **Branch**: Stores information about bank branches, including a unique identifier, branch name, and city.
+- **Employee**: Stores information about employees, including a unique identifier, employee name, manager ID, and branch ID.
+- **Customer**: Stores information about customers, including a unique identifier, customer name, address, and banker ID.
+- **Account**: Stores information about accounts, including a unique identifier, account type, and balance.
+- **Account_Customer**: Handles the many-to-many relationship between customers and accounts, storing account IDs and customer IDs.
 
-# ![Bank ERD](https://github.com/IngaPosiunaite/Bank-Database-SQL/assets/119749457/17a18d7f-1c8d-4636-aa47-ab79f1bb5e79)
+#### Data Insertion
+- Inserts sample data into the `Branch`, `Employee`, `Customer`, `Account`, and `Account_Customer` tables.
+
+### 2. `queries.sql`
+This SQL script contains queries for data extraction and manipulation. The queries demonstrate the flexibility and functionality of the database design by retrieving information from multiple tables.
+
+#### Queries
+- **Query 1**: Lists all customers with their account types and balances.
+- **Query 2**: Lists all employees and their respective branches.
+- **Query 3**: Lists all accounts and the customers associated with them.
+- **Query 4**: Lists all branches with their employees and managers.
+
+## How to Use
+
+### Setting Up the Database
+1. **Create a Database** (if not already created):
+    ```sql
+    CREATE DATABASE bank;
+    ```
+
+2. **Execute the `create_and_insert.sql` Script**:
+    ```bash
+    mysql -u [username] -p < create_and_insert.sql
+    ```
+
+3. **Execute the `queries.sql` Script**:
+    ```bash
+    mysql -u [username] -p < queries.sql
+    ```
+
+Make sure to replace `[username]` with your actual MySQL username.
+
+### Understanding the Data
+- The **Branch** table stores information about different branches of the bank.
+- The **Employee** table stores information about bank employees and their managers.
+- The **Customer** table stores information about customers and their assigned personal bankers.
+- The **Account** table stores information about different types of accounts and their balances.
+- The **Account_Customer** table establishes the many-to-many relationship between customers and accounts.
+
+### Query Outputs
+1. **Query 1**: Retrieves the names of customers along with the types and balances of their accounts.
+2. **Query 2**: Retrieves the names of employees and the branches they work in.
+3. **Query 3**: Retrieves the IDs and types of accounts along with the names of the customers associated with those accounts.
+4. **Query 4**: Retrieves the names of branches along with the names of the employees and their managers.
+
+## Entity-Relationship Diagram (ERD)
+
+### Entities:
+1. **Branch**: 
+   - **Attributes**: BranchID (PK), BranchName, City
+
+2. **Employee**: 
+   - **Attributes**: EmployeeID (PK), EmployeeName, ManagerID (FK), BranchID (FK)
+
+3. **Customer**: 
+   - **Attributes**: CustomerID (PK), CustomerName, Street, City, BankerID (FK)
+
+4. **Account**: 
+   - **Attributes**: AccountID (PK), AccountType, Balance
+
+5. **Account_Customer**: 
+   - **Attributes**: AccountID (FK), CustomerID (FK)
+
+### Relationships:
+1. **Branch** (1) ↔ (M) **Employee**
+2. **Employee** (1) ↔ (M) **Customer**
+3. **Customer** (M) ↔ (M) **Account** (through **Account_Customer**)
+
+### ER Diagram
+
+Here is a textual representation of the ER diagram:
+
+![Screenshot 2024-07-10 081646](https://github.com/IngaPosiunaite/Banking-Enterprise-Database-SQL/assets/119749457/51624a54-2e43-451c-bcde-4bc748334db5)
